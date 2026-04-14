@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoramento de energia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <a href="/logout" class="btn btn-danger">Sair</a>
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">⚡ Monitoramento de Energia</h2>
+
+    <!-- ALERTAS -->
+    {% for alerta in alertas %}
+        <div class="alert alert-danger d-flex justify-content-between align-items-center">
+            <span>{{ alerta }} </span>
+
+             <!-- ❌ BOTÃO FECHAR -->
+        <button onclick="this.parentElement.remove()" class="btn-close"></button>
+          
+        </button>
+        </div>
+
+    
+    {% endfor %}
+    
+
+    <!-- FORM + MÉTRICAS -->
+    <div class="row mb-4">
+
+        <!-- FORM -->
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm">
+                <h5>Adicionar Consumo</h5>
+
+                <form action="/adicionar" method="POST" class="d-flex gap-2 mt-2">
+                    <input type="number" step="0.1" name="consumo" class="form-control" placeholder="kWh" required>
+                    <button class="btn btn-primary">Adicionar</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- MÉTRICAS -->
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm">
+                <h5>Total Consumido</h5>
+                <h3>{{ dados | sum(attribute=2) }} kWh</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- HISTÓRICO -->
+    <div class="card p-3 mb-4 shadow-sm">
+        <h5>Histórico</h5>
+
+        <ul class="list-group">
+            {% for d in dados %}
+             <li class="list-group-item d-flex justify-content-between align-items-center">
+
+    <span>{{ d[1] }}</span>
+
+    <span>
+        {{ d[2] }} kWh
+
+        {% if d[2] > 50 %}
+            <span class="badge bg-danger">Alto</span>
+        {% endif %}
+
+       
+    </span>
+
+</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- GRÁFICO -->
+    <div class="card p-3 shadow-sm">
+        <h5>Gráfico de Consumo</h5>
+        <canvas id="grafico"></canvas>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const dados = [
+        {% for d in dados %}
+            {{ d[2] }},
+        {% endfor %}
+    ];
+
+    const labels = [
+        {% for d in dados %}
+            "{{ d[1] }}",
+        {% endfor %}
+    ];
+
+    new Chart(document.getElementById('grafico'), {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Consumo (kWh)',
+                    data: dados,
+                    tension: 0.3,
+                    pointBackgroundColor: dados.map(v => v > 50 ? 'red' : 'blue'),
+                    borderWidth: 2
+                },
+                {
+                    label: 'Limite',
+                    data: labels.map(() => 50),
+                    borderColor: 'red',
+                    borderDash: [5, 5],
+                    fill: false
+                }
+            ]
+        }
+    });
+</script>
+</body>
+
+</html>
