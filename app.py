@@ -116,6 +116,8 @@ def logout():
     session.pop('usuario', None)
     return redirect('/login')
 
+import os
+
 if __name__ == '__main__':
     criar_tabela()
-    app.run(host='127.0.0.1', port=8080, debug=True)  
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))
