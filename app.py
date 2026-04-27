@@ -5,6 +5,8 @@ import sqlite3
 
 app = Flask(__name__)
 
+DEMO_MODE = True
+
 app.secret_key = 'segredo'
 
 
@@ -45,8 +47,7 @@ def criar_tabela():
 
 @app.route('/')
 def index():
-    if 'usuario' not in session:
-        return redirect('/login')
+    
 
     conn = conectar()
     dados = conn.execute('SELECT * FROM consumo').fetchall()
@@ -65,6 +66,10 @@ def index():
 
 @app.route('/adicionar', methods=['POST'])    
 def adicionar():
+    if DEMO_MODE:
+        return redirect('/') # não salva nada 
+
+    
     consumo = request.form['consumo']
     data = datetime.now().strftime('%Y-%m-%d %H:%M') 
 
@@ -105,6 +110,8 @@ def login():
 
 @app.route('/excluir/<int:id>')
 def excluir(id):
+    if DEMO_MODE:
+        return redirect('/')
     conn = conectar()
     conn.execute('DELETE FROM consumo WHERE id=?', (id,))
     conn.commit()
