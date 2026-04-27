@@ -47,7 +47,7 @@ def criar_tabela():
 
 @app.route('/')
 def index():
-    
+    sesion['usuario'] = 'demo'
 
     conn = conectar()
     dados = conn.execute('SELECT * FROM consumo').fetchall()
