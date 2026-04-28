@@ -19,7 +19,8 @@ Sistema web para monitoramento de consumo de energia com dashboard interativo.
 - Render (deploy)
 
 ## 📸 Preview do sistema
-<img width="653" height="895" alt="energymonitoring" src="https://github.com/user-attachments/assets/811b7ce4-c052-46da-a337-5d8234cdc84c" />
+<img width="3535" height="2924" alt="energy" src="https://github.com/user-attachments/assets/ece39301-1768-424e-8734-50c888311f37" />
+
 
 
 
