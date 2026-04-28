@@ -1,18 +1,17 @@
 from flask import Flask, render_template, request, redirect, session
 from datetime import datetime
-
 import sqlite3
+import os
 
 app = Flask(__name__)
-
-DEMO_MODE = True
-
 app.secret_key = 'segredo'
 
+DEMO_MODE = True
 
 
 def conectar():
     return sqlite3.connect('database.db')
+
 
 def criar_tabela():
     conn = conectar()
@@ -26,28 +25,29 @@ def criar_tabela():
     ''')
 
     conn.execute('''
-         CREATE TABLE IF NOT EXISTS usuarios (
-         id INTEGER PRIMARY KEY AUTOINCREMENT,
-         username TEXT,
-         senha TEXT
-         )
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT,
+            senha TEXT
+        )
     ''')
 
     usuario = conn.execute("SELECT * FROM usuarios WHERE username='admin'").fetchone()
 
     if not usuario:
-
-         conn.execute("INSERT INTO usuarios (username, senha) VALUES ('admin', '123')")
+        conn.execute("INSERT INTO usuarios (username, senha) VALUES ('admin', '123')")
 
     conn.commit()
-    conn.close()    
+    conn.close()
 
 
+# 👇 AGORA sim chama depois de criar
+criar_tabela()
 
 
 @app.route('/')
 def index():
-    sesion['usuario'] = 'demo'
+    session['usuario'] = 'demo'  # login automático
 
     conn = conectar()
     dados = conn.execute('SELECT * FROM consumo').fetchall()
@@ -61,70 +61,43 @@ def index():
     return render_template('index.html', dados=dados, alertas=alertas)
 
 
-
-
-
-@app.route('/adicionar', methods=['POST'])    
+@app.route('/adicionar', methods=['POST'])
 def adicionar():
     if DEMO_MODE:
-        return redirect('/') # não salva nada 
+        return redirect('/')
 
-    
     consumo = request.form['consumo']
-    data = datetime.now().strftime('%Y-%m-%d %H:%M') 
+    data = datetime.now().strftime('%Y-%m-%d %H:%M')
 
-    conn = conectar() 
+    conn = conectar()
     conn.execute('INSERT INTO consumo (data, consumo) VALUES (?, ?)', (data, consumo))
     conn.commit()
     conn.close()
 
     return redirect('/')
-    
-def  verificar_alerta(consumo):
-    if float(consumo) > 50: 
-        return "⚠️ Alto consumo!"
-    return ""   
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        user = request.form['username']
-        senha = request.form['senha']
-
-        conn = conectar()
-        usuario = conn.execute(
-            'SELECT * FROM usuarios WHERE username=? AND senha=?',
-            (user, senha)
-        ).fetchone()
-        conn.close()
-
-        if usuario:
-            session['usuario'] = user
-            return redirect('/')
-        else:
-            return "Login inválido"
-
-    #  só executa quando for GET
-    return render_template('login.html')
 
 
 @app.route('/excluir/<int:id>')
 def excluir(id):
     if DEMO_MODE:
         return redirect('/')
+
     conn = conectar()
     conn.execute('DELETE FROM consumo WHERE id=?', (id,))
     conn.commit()
     conn.close()
     return redirect('/')
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return redirect('/')  # ignora login no modo demo
+
+
 @app.route('/logout')
 def logout():
-    session.pop('usuario', None)
-    return redirect('/login')
+    return redirect('/')
 
-import os
 
 if __name__ == '__main__':
-    criar_tabela()
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))
