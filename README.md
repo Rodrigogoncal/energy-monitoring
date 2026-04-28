@@ -42,7 +42,7 @@
 
 ## 📸 Preview do sistema
 
-| 📊 Alerta | 
+| 📊 | 
 |--------------|
 <img width="1903" height="806" alt="alerta" src="https://github.com/user-attachments/assets/1147656c-46c0-472e-b041-e113868c935d" /> <img width="1898" height="462" alt="historico" src="https://github.com/user-attachments/assets/0cafc948-87d0-45c9-b218-e594e0985b86" /> <img width="1900" height="796" alt="GraficoConsumo" src="https://github.com/user-attachments/assets/de7a3f90-7d4b-425f-af51-caf300191f7d" />
 
