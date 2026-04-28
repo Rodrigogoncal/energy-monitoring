@@ -19,6 +19,8 @@ Sistema web para monitoramento de consumo de energia com dashboard interativo.
 - Render (deploy)
 
 ## 📸 Preview do sistema
+energy.png 
+GraficoConsumo.png
 
 
 ## ⚙️ Como rodar localmente
