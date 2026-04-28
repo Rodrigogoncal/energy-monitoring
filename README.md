@@ -8,7 +8,7 @@
   <a href="https://energy-monitoring-rki8.onrender.com">
     <img src="https://img.shields.io/badge/Acessar%20Projeto-online-green?style=for-the-badge">
   </a>
-  <img src="https://img.shields.io/badge/Status-Ativo-blue?style=for-the-badge">
+<img src="https://img.shields.io/badge/Status-Ativo-blue?style=for-the-badge">
   <img src="https://img.shields.io/badge/Modo-Demo-orange?style=for-the-badge">
 </p>
 
@@ -42,7 +42,7 @@
 
 | Dashboard | Gráfico |
 |----------|---------|
-| <img src="https://github.com/user-attachments/assets/ece39301-1768-424e-8734-50c888311f37" width="100%"> | <img src="https://github.com/user-attachments/assets/dcfe001c-d6b4-4fe7-88be-b449fac20971" width="100%"> |
+| <img src="https://github.com/user-attachments/assets/ece39301-1768-424e-8734-50c888311f37" width="100%">|<img src="https://github.com/user-attachments/assets/dcfe001c-d6b4-4fe7-88be-b449fac20971" width="100%"> |
 
 ---
 
