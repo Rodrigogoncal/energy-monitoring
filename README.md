@@ -40,10 +40,9 @@
 
 ## 📸 Preview do sistema
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/ece39301-1768-424e-8734-50c888311f37" width="400"/>
-  <img src="https://github.com/user-attachments/assets/dcfe001c-d6b4-4fe7-88be-b449fac20971" width="400"/>
-</p>
+| Dashboard | Gráfico |
+|----------|---------|
+| <img src="https://github.com/user-attachments/assets/ece39301-1768-424e-8734-50c888311f37" width="100%"> | <img src="https://github.com/user-attachments/assets/dcfe001c-d6b4-4fe7-88be-b449fac20971" width="100%"> |
 
 ---
 
