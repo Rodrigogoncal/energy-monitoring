@@ -1,7 +1,7 @@
 # ⚡ Energy Monitoring System
 
 <p align="center">
-  Sistema web para monitoramento de consumo de energia com dashboard interativo.
+  Sistema de monitoramento de consumo de energia utilizando Flask, SQLite e gráficos em tempo real.
 </p>
 
 <p align="center">
